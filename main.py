@@ -1,14 +1,10 @@
 ##################################################################
 ################# startup and configuration file #################
 ##################################################################
-import os 
-from pathlib import Path
 from fastapi import FastAPI
 from fastapi_chameleon import global_init
 from fastapi.staticfiles import StaticFiles
 import uvicorn
-
-
 
 
 from views import (
@@ -19,8 +15,6 @@ from views import (
 
 
 app = FastAPI()
-
-
 
 
 
@@ -57,16 +51,13 @@ def start_uvicorn():
 
 
 def config():
+    print("[+] Configuring server")
     config_templates()
     config_routes()
     
     
 def config_templates():
-    dev_mode = True
-    BASE_DIR = Path(__file__).resolve().parent
-    template_folder = str(BASE_DIR / 'templates')
-    print(f'template_folder={template_folder}')
-    global_init(template_folder, auto_reload=dev_mode)
+    global_init('templates')
 
 
 def config_routes():
