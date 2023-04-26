@@ -52,8 +52,11 @@ def start_uvicorn():
 
 def config():
     print("[+] Configuring server")
-    config_templates()
     config_routes()
+    print("[+] ...routes configured")
+    config_templates()
+    print("[+] ...templates configured")
+    print("[+] ...done configuring server")
     
     
 def config_templates():
