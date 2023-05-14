@@ -1,18 +1,16 @@
 <div metal:use-macro="load: ../shared/_layout.html">
-    <div metal:fill-slot="content" tal:omit-tag="True">
+    <__content__ metal:fill-slot="content" tal:omit-tag="True">
         
-
-
         <!-- ======= Hero Section ======= -->
         <section id="hero" class="d-flex justify-content-center align-items-center">
             <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
                 <h1>Aprenda Hoje,<br>Aprenda Amanhã</h1>
                 <h2>Venha aprender connosco</h2>
-                <a href="courses.html" class="btn-get-started">Registo Gratuito</a>
+                <a href="/account/register" class="btn-get-started">Registo Gratuito</a>
             </div>
-        </section><!-- End Hero -->
+        </section><!--/ End Hero -->
 
-
+        <!-- Start Main -->
         <main id="main">
 
             <!-- ======= About Section ======= -->
@@ -43,7 +41,7 @@
 
                     </div>
                 </div>
-            </section><!-- End About Section -->
+            </section><!--/ End About Section -->
 
 
             <!-- ======= Counts Section ======= -->
@@ -52,28 +50,28 @@
                     <div class="row counters">
 
                         <div class="col-lg-3 col-6 text-center">
-                            <span data-purecounter-start="0" data-purecounter-end="99" data-purecounter-duration="1" class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="${num_courses}" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Cursos</p>
                         </div>
 
                         <div class="col-lg-3 col-6 text-center">
-                            <span data-purecounter-start="0" data-purecounter-end="2315" data-purecounter-duration="1" class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="${num_students}" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Estudantes</p>
                         </div>
 
                         <div class="col-lg-3 col-6 text-center">
-                            <span data-purecounter-start="0" data-purecounter-end="23" data-purecounter-duration="1" class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="${num_trainers}" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Formadores</p>
                         </div>
 
                         <div class="col-lg-3 col-6 text-center">
-                            <span data-purecounter-start="0" data-purecounter-end="159" data-purecounter-duration="1" class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="${num_events}" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Eventos</p>
                         </div>
 
                     </div>
                 </div>
-            </section><!-- End Counts Section -->
+            </section><!--/ End Counts Section -->
 
 
             <!-- ======= Why Us Section ======= -->
@@ -123,12 +121,12 @@
                                     </div>
 
                                 </div>
-                            </div><!-- End .content-->
+                            </div><!--/ End .content-->
                         </div>
 
                     </div>
                 </div>
-            </section><!-- End Why Us Section -->
+            </section><!--/ End Why Us Section -->
 
 
             <!-- ======= Features Section ======= -->
@@ -222,179 +220,82 @@
 
                     </div>
                 </div>
-            </section><!-- End Features Section -->
+            </section><!--/ End Features Section -->
 
 
             <!-- ======= Popular Courses Section ======= -->
             <section id="popular-courses" class="courses">
                 <div class="container" data-aos="fade-up">
-
                     <div class="section-title">
                         <h2>Cursos</h2>
                         <p>Cursos Populares</p>
                     </div>
-
                     <div class="row" data-aos="zoom-in" data-aos-delay="100">
-
-                        <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                            <div class="course-item">
-                                <img src="/static/assets/img/course-1.jpg" class="img-fluid" alt="...">
-                                <div class="course-content">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4>Hotelaria e Turismo</h4>
-                                        <p class="price">$169</p>
-                                    </div>
-
-                                    <h3><a href="course-details.html">Gestor Turístico</a></h3>
-                                    <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
-                                        
-                                    <div class="trainer d-flex justify-content-between align-items-center">
-                                        <div class="trainer-profile d-flex align-items-center">
-                                            <img src="/static/assets/img/trainers/trainer-1.jpg" class="img-fluid" alt="">
-                                            <span>Osmar</span>
+                        <!-- Start Repeat Popular Courses (Loop For) -->
+                        <__repeat__ tal:repeat="course popular_courses" tal:omit-tag="True">
+                            <!-- Start Course Item-->
+                            <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                                <div class="course-item">
+                                    <img src="/static/assets/img/courses/course-${course.id}.jpg" class="img-fluid" alt="...">
+                                    <div class="course-content">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h4>${course.category}</h4>
+                                            <p class="price">${course.price}</p>
                                         </div>
-
-                                        <div class="trainer-rank d-flex align-items-center">
-                                            <i class="bx bx-user"></i>&nbsp;50&nbsp;&nbsp;
-                                            <i class="bx bx-heart"></i>&nbsp;65
+                                        <h3><a href="/courses/${course.id}">${course.name}</a></h3>
+                                        <p>${course.summary}</p>
+                                        <div class="trainer d-flex justify-content-between align-items-center">
+                                            <div class="trainer-profile d-flex align-items-center">
+                                                <img src="/static/assets/img/trainers/trainer-${course.trainer_id}.jpg" class="img-fluid" alt="">
+                                                <span>${course.trainer_name}</span>
+                                            </div>
+                                            <div class="trainer-rank d-flex align-items-center">
+                                                <i class="bx bx-user"></i>&nbsp;50&nbsp;&nbsp;
+                                                <i class="bx bx-heart"></i>&nbsp;65
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </div> <!-- End Course Item-->
-
-                        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                            <div class="course-item">
-                                <img src="/static/assets/img/course-2.jpg" class="img-fluid" alt="...">
-                                <div class="course-content">
-                                    
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4>Programação em C++</h4>
-                                        <p class="price">$250</p>
-                                    </div>
-
-                                    <h3><a href="course-details.html">Estruturas de Dados em C++</a></h3>
-                                    <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
-                                    
-                                    <div class="trainer d-flex justify-content-between align-items-center">
-                                        <div class="trainer-profile d-flex align-items-center">
-                                            <img src="/static/assets/img/trainers/trainer-4.jpg" class="img-fluid" alt="">
-                                            <span>Bernardo</span>
-                                        </div>
-                                        <div class="trainer-rank d-flex align-items-center">
-                                            <i class="bx bx-user"></i>&nbsp;35&nbsp;&nbsp;
-                                            <i class="bx bx-heart"></i>&nbsp;42
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> <!-- End Course Item-->
-                        
-                        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
-                            <div class="course-item">
-                                <img src="/static/assets/img/course-3.jpg" class="img-fluid" alt="...">
-                                <div class="course-content">
-                                    
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4>Natação</h4>
-                                        <p class="price">$180</p>
-                                    </div>
-
-                                    <h3><a href="course-details.html">Borboleta</a></h3>
-                                    <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
-                                    
-                                    <div class="trainer d-flex justify-content-between align-items-center">
-                                        <div class="trainer-profile d-flex align-items-center">
-                                            <img src="/static/assets/img/trainers/trainer-2.jpg" class="img-fluid" alt="">
-                                            <span>Alberta</span>
-                                        </div>
-                                        <div class="trainer-rank d-flex align-items-center">
-                                            <i class="bx bx-user"></i>&nbsp;20&nbsp;&nbsp;
-                                            <i class="bx bx-heart"></i>&nbsp;85
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> <!-- End Course Item-->
-
+                            </div> 
+                            <!--/ End Course Item-->
+                        </__repeat__>
+                        <!--/ End Repeat Popular Courses (Loop For) -->
                     </div>
-
                 </div>
-            </section><!-- End Popular Courses Section -->
+            </section>
+            <!--/ End Popular Courses Section -->
 
-
-            <!-- ======= Trainers Section ======= -->
+            <!-- Trainers Section -->
             <section id="trainers" class="trainers">
                 <div class="container" data-aos="fade-up">
                     <div class="row" data-aos="zoom-in" data-aos-delay="100">
-                        
-                        <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                            <div class="member">
-                                <img src="/static/assets/img/trainers/trainer-2.jpg" class="img-fluid" alt="">
-                                <div class="member-content">
-                                    <h4>Alberta Almeida</h4>
-                                    <span>Programação Web</span>
-                                    <p>
-                                        Magni qui quod omnis unde et eos fuga et exercitationem. Odio veritatis perspiciatis quaerat qui aut aut aut
-                                    </p>
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
+                        <!-- Start Repeat Selected Trainers (Loop For) -->
+                        <__repeat__ tal:repeat="trainer selected_trainers" tal:omit-tag="True">                    
+                            <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                                <div class="member">
+                                    <img src="/static/assets/img/trainers/trainer-${trainer.id}.jpg" class="img-fluid" alt="">
+                                    <div class="member-content">
+                                        <h4>${trainer.name}</h4>
+                                        <span>${trainer.expertise}</span>
+                                        <p>${trainer.presentation}</p>
+                                        <div class="social">
+                                            <a href="${trainer.twitter}"><i class="bi bi-twitter"></i></a>
+                                            <a href="${trainer.facebook}"><i class="bi bi-facebook"></i></a>
+                                            <a href="${trainer.instagram}"><i class="bi bi-instagram"></i></a>
+                                            <a href="${trainer.linkedin}"><i class="bi bi-linkedin"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                            <div class="member">
-                                <img src="/static/assets/img/trainers/trainer-3.jpg" class="img-fluid" alt="">
-                                <div class="member-content">
-                                    <h4>Augusto Avillez</h4>
-                                    <span>Marketing</span>
-                                    <p>
-                                        Repellat fugiat adipisci nemo illum nesciunt voluptas repellendus. In architecto rerum rerum temporibus
-                                    </p>
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                            <div class="member">
-                                <img src="/static/assets/img/trainers/trainer-1.jpg" class="img-fluid" alt="">
-                                <div class="member-content">
-                                    <h4>Osmar Tello</h4>
-                                    <span>Gestão de Conteúdos</span>
-                                    <p>
-                                        Voluptas necessitatibus occaecati quia. Earum totam consequuntur qui porro et laborum toro des clara
-                                    </p>
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        </__repeat__>
+                        <!--/ End Repeat Selected Trainers (Loop For) -->
                     </div>
                 </div>
-            </section><!-- End Trainers Section -->
+            </section>
+            <!--/ End Trainers Section -->
 
-        </main><!-- End #main -->
-        
+        </main>
+        <!--/ End Main -->
 
-
-    </div>
+    </__content__>
 </div>

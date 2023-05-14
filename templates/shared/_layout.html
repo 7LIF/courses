@@ -36,8 +36,16 @@
     <!-- Template Main JS File -->
     <script src="/static/assets/js/main.js" defer></script>
 
+    
+    <!-- Template Main JS File -->
+    <script src="/static/assets/js/main.js" defer></script>
+
     <__css_scripts__ metal:define-slot="additional_css" tal:omit-tag="True">
     </__css_scripts__>
+
+    <__js_modules__ metal:define-slot="additional_js_modules" tal:omit-tag="True">
+    </__js_modules__>
+
 
 </head>
 
@@ -73,12 +81,29 @@
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
 
-            <a href="/accoount/login" style="margin-left: 2rem">Entrar</a>
-            <a href="/account/register" class="get-started-btn">Registo Gratuito</a>
+
+
+
+
+
+            <!--  
+            <a tal:condition="not is_logged_in" href="/account/login" style="margin-left: 2rem">Entrar</a>
+            <a tal:condition="not is_logged_in" href="/account/register" class="get-started-btn">Registo Gratuito</a>
+      
+            <a tal:condition="is_logged_in" href="/account/logout" style="margin-left: 2rem">Sair</a>
+            <a tal:condition="is_logged_in" href="/account" class="get-started-btn">Minha Conta</a>
+            -->
+
+
+
+
+
 
         </div>
     </header><!-- End Header -->    
     
+
+
 
 
 
@@ -91,6 +116,7 @@
 
 
 
+    
 
     <!-- ======= Footer ======= -->
     <footer id="footer">
