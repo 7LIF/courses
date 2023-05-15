@@ -11,7 +11,7 @@ from fastapi import (
     responses,
     status,
 )
-from starlette.requests import Request
+
 from fastapi_chameleon import template
 from services import student_service
 from common.common import (
@@ -22,7 +22,7 @@ from common.common import (
     is_valid_birth_date,
 )
 from common.fastapi_utils import form_field_as_str
-from common.auth import set_auth_cookie
+from common.auth import set_auth_cookie, delete_auth_cookie
 from common.viewmodel import ViewModel
 
 
@@ -40,8 +40,16 @@ router = APIRouter()
 @router.get('/account')
 @template()
 async def account():
-    return {
-    }
+    return account_viewmodel()
+    
+def account_viewmodel():
+    return ViewModel(
+        error = None,
+        # 'error_msg': 'There was an error with your data. Please try again.'
+    )
+    
+    
+
 
 
 ################################################################################
@@ -94,6 +102,7 @@ async def post_register_viewmodel(request: Request):
         email = form_field_as_str(form_data, 'email'),
         password = form_field_as_str(form_data, 'password'),
         birth_date = form_field_as_str(form_data, 'birth_date'),
+        new_student_id = None,
     )
 
 
@@ -133,8 +142,8 @@ async def login():
     
 def login_viewmodel():
     return ViewModel(
-        error = None,
-        # 'error_msg': 'There was an error with your data. Please try again.'
+        email = '',
+        password = '',    
     )
     
 
@@ -143,12 +152,7 @@ def login_viewmodel():
 ################################################################################
 
 @router.get('/account/logout')
-@template()
 async def logout():
-    return logout_viewmodel()
-    
-def logout_viewmodel():
-    return ViewModel(
-        error = None,
-        # 'error_msg': 'There was an error with your data. Please try again.'
-    )
+    response = responses.RedirectResponse(url='/', status_code = status.HTTP_302_FOUND)
+    delete_auth_cookie(response)
+    return response
