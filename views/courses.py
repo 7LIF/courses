@@ -21,24 +21,34 @@ async def courses(request: Request):
 
 def courses_viewmodel():
     return ViewModel(
-        available_courses = course_service.available_courses(AVAILABLE_COURSES_COUNT),      
+        available_courses = course_service.available_courses(AVAILABLE_COURSES_COUNT)   
     )
-    
+
+
+
+################################################################################
+##      Define a route for the course_details page
+################################################################################  
     
 @router.get('/courses/{course_id}')
 @template()
-async def courses_details():
-    return courses_details_viewmodel()
+async def course_details(course_id: int):
+    return course_details_viewmodel(course_id)
 
-def courses_details_viewmodel():
-     return ViewModel(
-        id = 5,
-        category = 'Programação',
-        subcategory = 'Programação Web',
-        price = dec(198),
-        name = 'Desenvolvimento de Websites',
-        summary = 'Consectetur et, temporibus velit inventore porro sint dolore',
-        trainer_id = 1,
-        trainer_name = 'Ricardo Faria',
+def course_details_viewmodel(course_id: int):
+    if course := course_service.get_course_by_id(course_id):
+        return ViewModel(
+            course = course
+            #id = 5,
+            #category = 'Programação',
+            #subcategory = 'Programação Web',
+            #price = dec(198),
+            #name = 'Desenvolvimento de Websites',
+            #summary = 'Consectetur et, temporibus velit inventore porro sint dolore',
+            #trainer_id = 1,
+            #trainer_name = 'Ricardo Faria',
     )
-    
+    return ViewModel(
+        error = None,
+        error_msg = 'Curso não encontrado',
+    )

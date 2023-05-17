@@ -1,9 +1,4 @@
 <div metal:use-macro="load: ../shared/_layout.html">
-
-    <__css_scripts__ metal:fill-slot="additional_css" tal:omit-tag="True">
-        <link rel="stylesheet" href="/static/assets/css/account.css">
-    </__css_scripts__>
-
     <__content__ metal:fill-slot="content" tal:omit-tag="True">
 
         <main id="main" class="account-main">
@@ -20,15 +15,13 @@
                                         <form action="/account/login" method="POST" class="account-form">
 
                                             <div class="form-outline mb-4">
-                                                <input type="email" name="email_addr" class="form-control form-control-lg" required
-                                                    value="${email_addr}">
-                                                <label class="form-label" for="form3Example3cg">O Seu Email</label>
+                                                <label class="form-label" for="form3Example3cg">Email</label>
+                                                <input type="email" name="email_addr" class="form-control form-control-lg" required value="${email_addr}">        
                                             </div>
 
                                             <div class="form-outline mb-4">
-                                                <input type="password" name="password" class="form-control form-control-lg" 
-                                                    value="${password}">
-                                                <label class="form-label" for="form3Example4cg">Senha</label>
+                                                <label class="form-label" for="form3Example4cg">Palavra-passe</label>
+                                                <input type="password" name="password" class="form-control form-control-lg" value="${password}">                                
                                             </div>
 
                                             <div class="d-flex justify-content-center form-outline mb-4 error-msg" tal:condition="error">${error_msg}</div>
@@ -42,13 +35,6 @@
                                             <p class="text-center text-muted mt-5 mb-0">Don't have an account? 
                                                 <a href="/account/register"
                                                     class="fw-bold text-body"><u>Register here</u></a></p>
-                                        <!--
-                                            <__repeat__ tal:repeat="provider external_auth_providers" tal:omit-tag="True">
-                                                <p class="text-center text-muted mt-5 mb-0">
-                                                    <a href="/extlogin/start/$[provider.id}"
-                                                        class="fw-bold text-body"><u>Login with $[provider.name}</u></a></p>
-                                            </__repeat__>
-                                        -->
                                         </form>
                                     </div>
                                 </div>

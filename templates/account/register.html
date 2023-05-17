@@ -1,9 +1,4 @@
 <div metal:use-macro="load: ../shared/_layout.html">
-
-    <__css_scripts__ metal:fill-slot="additional_css" tal:omit-tag="True">
-        <link rel="stylesheet" href="/static/assets/css/account.css">
-    </__css_scripts__>
-
     <__content__ metal:fill-slot="content" tal:omit-tag="True">
 
         <main id="main" class="account-main">
@@ -27,19 +22,19 @@
 
                                             <div class="form-outline mb-4">
                                                 <label class="form-label" for="form3Example3cg">Email*</label>
-                                                <input type="email" name="email" class="form-control form-control-lg" required
-                                                    value="${email}">                        
+                                                <input type="email" name="email_addr" class="form-control form-control-lg" required
+                                                    value="${email_addr}">                        
                                             </div>
 
                                             <div class="form-outline mb-4">
+                                                <label class="form-label" for="form3Example3cg">Data de Nascimento*</label>
                                                 <input type="date" name="birth_date" class="form-control form-control-lg" required
                                                     value="${birth_date}" min="${min_date}" max="${max_date}">
-                                                <label class="form-label" for="form3Example3cg">Data de Nascimento*</label>
                                             </div>
                                         
                                             <div class="form-outline mb-4">
                                                 <label class="form-label" for="form3Example4cg">Palavra-passe*</label>
-                                                <input type="password" name="password" class="form-control form-control-lg" 
+                                                <input type="password" name="password" class="form-control form-control-lg" required
                                                     value="${password}">
                                                 
                                             </div>
@@ -50,24 +45,23 @@
                                             </div>
 
                                             <div class="form-check d-flex justify-content-center mb-5">
-                                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" required
+                                                <input class="form-check-input me-2" id="form2Example3cg" type="checkbox" value=""  required
                                                         ${checked} >
                                                 <label class="form-check-label" for="form2Example3g">
                                                     Eu concordo com as <a href="#!" class="text-body"><u>Condições de Serviço</u></a>
                                                 </label>
                                             </div>
 
-                                            <div tal:condition="error" class="d-flex justify-content-center form-outline mb-4 error-msg">${error_msg}</div>
+                                            <div tal:condition="error" class="d-flex justify-content-center form-outline mb-4 error-msg"> ${error_msg} </div>
 
 
                                             <div class="d-flex justify-content-center">
-                                                <button type="submit"
-                                                    class="btn btn-success btn-block btn-lg get-started-btn text-body">Registar</button>
+                                                <button type="submit" class="btn btn-success btn-block btn-lg get-started-btn text-body">Registar</button>
                                             </div>
 
-                                            <p class="text-center text-muted mt-5 mb-0">Have already an account? 
-                                                <a href="/account/login"
-                                                    class="fw-bold text-body"><u>Login here</u></a></p>
+                                            <p class="text-center text-muted mt-5 mb-0">Já tem uma conta? 
+                                                <a href="/account/login" class="fw-bold text-body"><u>Iniciar Sessão</u></a>
+                                            </p>
                                         </form>
                                     </div>
                                 </div>

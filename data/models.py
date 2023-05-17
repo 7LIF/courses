@@ -5,7 +5,6 @@
 from datetime import date, datetime
 from decimal import Decimal as dec
 from dataclasses import dataclass, field
-from services import student_service
 
 
 ################################################################################
@@ -48,7 +47,7 @@ class Trainer:
 class Student:
     id: int
     name: str
-    email: str
+    email_addr: str
     birth_date: date
     password: str
     profile_img_url: str | None = None

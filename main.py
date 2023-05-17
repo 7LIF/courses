@@ -1,17 +1,18 @@
-##################################################################
-################# startup and configuration file #################
-##################################################################
+################################################################################
+######################## startup and configuration file ########################
+################################################################################
 
-import unicorn
+
+################################################################################
+##      Importing necessary modules
+################################################################################
+
+import uvicorn
 from fastapi import FastAPI
 from fastapi_chameleon import global_init
 from fastapi.staticfiles import StaticFiles
 from common.fastapi_utils import add_global_request_middleware
-from views import (
-    account,
-    courses,
-    home,
-)
+from views import account, courses, home
 
 
 
@@ -34,6 +35,7 @@ def config():
     config_templates()
     print("[+] ...templates configured")
     print("[+] ...done configuring server")
+    
     
     
 def config_middleware ():

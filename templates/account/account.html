@@ -1,9 +1,5 @@
 <div metal:use-macro="load: ../shared/_layout.html">
 
-    <__css_scripts__ metal:fill-slot="additional_css" tal:omit-tag="True">
-        <link rel="stylesheet" href="/static/assets/css/account.css">
-    </__css_scripts__>
-
     <__js_modules__ metal:fill-slot="additional_js_modules" tal:omit-tag="True">
         <script type="module" src="/static/assets/js/account.js" defer></script>
     </__js_modules__>
@@ -94,9 +90,9 @@
                                                 <label class="form-label" for="repeat-password">Repita a nova senha</label>
                                             </div>
 
-                                            <!--
-                                            <div tal:condition="error" class="d-flex justify-content-center form-outline mb-4 error-msg">$[error_msg}</div>
-                                            -->
+                                            
+                                            <div tal:condition="error" class="d-flex justify-content-center form-outline mb-4 error-msg">${error_msg}</div>
+                                            
                                             
                                             <div class="d-flex justify-content-center">
                                                 <button type="submit"
