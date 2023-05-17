@@ -12,6 +12,56 @@ _students = []
 
 
 
+def create_account(
+    name: str,
+    email_addr: str,
+    birth_date: date,
+    password: str,
+):
+    student = Student(
+        randrange(10_000, 100_000),  # id
+        name,
+        email_addr,
+        birth_date,
+        hash_password(password),
+    )
+    _students.append(student)
+    return student
+
+
+
+
+
+def update_account(
+    id: int, 
+    current_password: str, 
+    email_addr: str | None = None, 
+    new_password: str | None = None
+) -> Student:
+    
+    if not (student := get_student_by_id(id)):
+        raise ValueError(f'Aluno com id {id} nao encontrado!')
+    if not password_matches(student, current_password):
+        raise ValueError('Palavra-passe errada!')
+    
+    student.email_addr = email_addr if email_addr else student.email_addr
+    student.password = hash_password(new_password) if new_password else student.password
+    
+    return student
+    
+
+
+
+
+
+
+def get_student_by_id(student_id: int) -> Student | None:
+    return find_in(_students, lambda student: student.id == student_id)
+
+
+
+
+
 def get_student_by_email(email_addr: str) -> Student | None:
     if not is_valid_email(email_addr):
         raise ValueError(f'Endereço de email {email_addr} inválido!')
@@ -30,21 +80,13 @@ def authenticate_student_by_email(email_addr: str, password: str) -> Student | N
 
 
 
-def create_account(
-    name: str,
-    email_addr: str,
-    birth_date: date,
-    password: str,
-):
-    student = Student(
-        randrange(10_000, 100_000),  # id
-        name,
-        email_addr,
-        birth_date,
-        hash_password(password),
-    )
-    _students.append(student)
-    return student
+def password_matches(student: Student, password: str) -> bool:
+    return student.password == hash_password(password)
+
+
+
+
+
 
 
 def student_count() -> int:
