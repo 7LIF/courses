@@ -6,17 +6,23 @@ from datetime import date
 from fastapi import APIRouter, Request, Response, Depends, responses, status
 from fastapi_chameleon import template
 from common.auth import set_auth_cookie, delete_auth_cookie
-from common.common import MIN_DATE, is_valid_name, is_valid_email, is_valid_birth_date, is_valid_password, is_valid_iso_date
+from common.common import is_valid_name, is_valid_email, is_valid_birth_date, is_valid_password, is_valid_iso_date
 from common.fastapi_utils import form_field_as_str
 from common.viewmodel import ViewModel
 from services import student_service
-
+from services.student_service import authenticate_student_by_email
 
 ################################################################################
 ##      Create an instance of the router
 ################################################################################
 
 router = APIRouter()
+
+
+
+
+MIN_DATE = date.fromisoformat('1920-01-01')
+
 
 
 ################################################################################
@@ -71,11 +77,8 @@ async def post_register(request: Request):
         return vm
     
     response = responses.RedirectResponse(url='/', status_code = status.HTTP_302_FOUND)
-    
     set_auth_cookie(response, vm.new_student_id)
-    
     return response
-
 
 
 
@@ -126,7 +129,7 @@ async def login():
 def login_viewmodel():
     return ViewModel(
         email_addr = '',
-        password = ''    
+        password = '',  
     )
 
 
@@ -136,8 +139,8 @@ def login_viewmodel():
 ##     Handling the POST request and view model for login
 ################################################################################
 
-@router.post('/login')
-@template(template_file='account/login')
+@router.post('/account/login')
+@template(template_file='account/login.html')
 async def post_login(request: Request):
     vm = await post_login_viewmodel(request)
 
@@ -145,12 +148,8 @@ async def post_login(request: Request):
         return vm
     
     response = responses.RedirectResponse(url='/', status_code = status.HTTP_302_FOUND)
-    
     set_auth_cookie(response, vm.student_id)
-    
     return response
-
-
 
 
 async def post_login_viewmodel(request: Request) -> ViewModel:
@@ -158,7 +157,7 @@ async def post_login_viewmodel(request: Request) -> ViewModel:
     vm = ViewModel(
         email_addr = form_field_as_str(form_data, 'email_addr'),
         password = form_field_as_str(form_data, 'password'),
-        student_id = None
+        student_id = None,
     )
 
     if not is_valid_email(vm.email_addr):

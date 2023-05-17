@@ -24,7 +24,8 @@ def authenticate_student_by_email(email_addr: str, password: str) -> Student | N
         raise ValueError(f'Endereço de email {email_addr} inválido!')
     if student := get_student_by_email(email_addr):
         if hash_password(password) == student.password:
-            return None 
+            return student    
+        return None 
 
 
 
