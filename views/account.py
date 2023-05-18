@@ -5,7 +5,7 @@
 from datetime import date
 from fastapi import APIRouter, Request, Response, Depends, responses, status
 from fastapi_chameleon import template
-from common.auth import set_auth_cookie, delete_auth_cookie, get_current_user
+from common.auth import set_auth_cookie, delete_auth_cookie, get_current_user, exec_login
 from common.common import is_valid_name, is_valid_email, is_valid_birth_date, is_valid_password, is_valid_iso_date
 from common.fastapi_utils import form_field_as_str
 from common.viewmodel import ViewModel
@@ -22,6 +22,11 @@ router = APIRouter()
 
 
 MIN_DATE = date.fromisoformat('1920-01-01')
+
+
+
+
+
 
 
 
@@ -118,6 +123,8 @@ async def update_account_viewmodel(request: Request):
 @router.get('/account/register')
 @template()
 async def register():
+    
+    
     return register_viewmodel()
 
 
@@ -145,9 +152,8 @@ async def post_register(request: Request):
     if vm.error:
         return vm
     
-    response = responses.RedirectResponse(url='/', status_code = status.HTTP_302_FOUND)
-    set_auth_cookie(response, vm.new_student_id)
-    return response
+    return exec_login(vm.new_student_id)
+
 
 
 
@@ -216,9 +222,9 @@ async def post_login(request: Request):
     if vm.error:
         return vm
     
-    response = responses.RedirectResponse(url='/', status_code = status.HTTP_302_FOUND)
-    set_auth_cookie(response, vm.student_id)
-    return response
+    return exec_login(vm.student_id)
+
+
 
 
 async def post_login_viewmodel(request: Request) -> ViewModel:

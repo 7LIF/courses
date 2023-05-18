@@ -87,8 +87,6 @@ def password_matches(student: Student, password: str) -> bool:
 
 
 
-
-
 def student_count() -> int:
     return 2351
 
