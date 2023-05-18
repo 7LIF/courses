@@ -8,13 +8,28 @@
 ################################################################################
 
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, status, responses
+from chameleon import PageTemplateFile
 from fastapi_chameleon import global_init
 from fastapi.staticfiles import StaticFiles
 from common.fastapi_utils import add_global_request_middleware
+from common.auth import HTTPUnauthorizedAccess, HTTPUnauthenticatedOnly
+from common.viewmodel import ViewModel
 from views import account, courses, home
 
 
+################################################################################
+##      Constants
+################################################################################
+
+TEMPLATES_DIR_PATH = './templates'
+TEMPLATES_ERROR_PATH = f'{TEMPLATES_DIR_PATH}/errors'
+
+
+
+################################################################################
+##      
+################################################################################
 
 app = FastAPI()
 
@@ -45,15 +60,27 @@ def config_middleware ():
     
     
     
+    
+    
+    
 def config_templates():
-    global_init('templates')
-
+    global_init(TEMPLATES_DIR_PATH)
 
 
 def config_exception_handlers():
-    
-    
-    app.add_exception_handler()
+    async def unauthorized_access_handler(*_, **__):
+        template = PageTemplateFile(f'{TEMPLATES_ERROR_PATH}/error404.html')
+        content = template(**ViewModel())
+        return responses.HTMLResponse(content, status_code = status.HTTP_404_NOT_FOUND)
+
+    async def unauthenticated_only_handler(*_, **__):
+        return responses.RedirectResponse(url = '/', status_code = status.HTTP_302_FOUND)
+
+    app.add_exception_handler(HTTPUnauthorizedAccess, unauthorized_access_handler)
+    app.add_exception_handler(status.HTTP_404_NOT_FOUND, unauthorized_access_handler)
+    app.add_exception_handler(HTTPUnauthenticatedOnly, unauthenticated_only_handler)
+
+
 
 
 
