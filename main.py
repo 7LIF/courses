@@ -30,10 +30,12 @@ def config():
     print("[+] Configuring server")
     config_middleware()
     print("[+] ...middleware configured")
-    config_routes()
-    print("[+] ...routes configured")
     config_templates()
     print("[+] ...templates configured")
+    config_exception_handlers()
+    print("[+] ...exception handlers configured")
+    config_routes()
+    print("[+] ...routes configured")
     print("[+] ...done configuring server")
     
     
@@ -45,6 +47,14 @@ def config_middleware ():
     
 def config_templates():
     global_init('templates')
+
+
+
+def config_exception_handlers():
+    
+    
+    app.add_exception_handler()
+
 
 
 
